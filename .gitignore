@@ -1,0 +1,61 @@
+# ==============================
+# Orbit — .gitignore
+# ==============================
+
+# ----- Specification (NEVER commit) -----
+ORBIT_especificacion_completa.md
+
+# ----- Environment & secrets -----
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# ----- Go -----
+/bin/
+/tmp/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+*.prof
+*.pprof
+coverage.out
+coverage.html
+vendor/
+
+# ----- Frontend (Node / Vite) -----
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/coverage/
+frontend/.turbo/
+frontend/*.tsbuildinfo
+
+# ----- Database -----
+*.sql.bak
+pgdata/
+
+# ----- IDE & OS -----
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ----- Docker -----
+docker-compose.override.yml
+
+# ----- Logs -----
+*.log
+logs/
+
+# ----- Build artifacts -----
+/dist/
+/build/
