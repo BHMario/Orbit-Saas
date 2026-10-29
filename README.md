@@ -102,10 +102,13 @@ make fe-dev
 
 ## Documentación
 
-- [Arquitectura](docs/architecture/)
-- [Decisiones técnicas (ADRs)](docs/decisions/)
-- [API](docs/api/)
-- [Guías operativas](docs/runbooks/)
+- [Arquitectura](docs/architecture/README.md) — Componentes, flujos y principios de diseño
+  - [Alcance del MVP](docs/architecture/mvp-scope.md) — Qué incluye y qué no el MVP
+  - [Modelo de amenazas](docs/architecture/threat-model.md) — Amenazas prioritarias y controles
+  - [Modelo de datos](docs/architecture/data-model.md) — Tablas, relaciones y convenciones
+- [Decisiones técnicas (ADRs)](docs/decisions/README.md) — Registro de decisiones arquitectónicas
+- [API](docs/api/) — Documentación de endpoints (por completar)
+- [Guías operativas](docs/runbooks/) — Runbooks de operación (por completar)
 
 ## Contribuir
 
