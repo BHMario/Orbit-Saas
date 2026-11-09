@@ -37,7 +37,7 @@ lint: ## Ejecuta análisis estático (go vet)
 	go vet ./...
 
 fmt: ## Formatea código Go
-	gofmt -w .
+	gofmt -w cmd internal
 
 # --- Base de datos ---
 

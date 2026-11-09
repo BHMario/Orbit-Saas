@@ -48,6 +48,13 @@ orbit/
     workflows/     → Pipelines CI/CD
 ```
 
+## Requisitos previos
+
+- **Go**: `1.26+` (`go version`)
+- **Node.js**: `22+` LTS (`node --version`)
+- **npm**: `10+` (`npm --version`)
+- **Docker & Docker Compose**: para servicios locales de desarrollo
+
 ## Comandos previstos
 
 ```bash

@@ -1,4 +1,7 @@
 package main
 
-// Orbit API server — entry point.
-// Implementation will be added in future commits.
+import "fmt"
+
+func main() {
+	fmt.Println("Orbit API server — not yet implemented (see C06)")
+}
