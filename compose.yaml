@@ -1,0 +1,47 @@
+# ==============================
+# Orbit — Docker Compose (desarrollo local)
+# ==============================
+#
+# Uso:
+#   docker compose up -d        # o: make dev-up
+#   docker compose down          # o: make dev-down
+#   docker compose down -v       # elimina también los volúmenes (datos de DB)
+#
+# Los valores por defecto coinciden con .env.example.
+# Para sobrescribir, crea un archivo .env en la raíz del proyecto.
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: orbit-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-orbit}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-orbit}
+      POSTGRES_DB: ${POSTGRES_DB:-orbit}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./scripts/db/init-test-db.sh:/docker-entrypoint-initdb.d/init-test-db.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-orbit} -d ${POSTGRES_DB:-orbit}"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+
+  # MailHog — captura correo en desarrollo (UI en http://localhost:8025)
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: orbit-mailhog
+    restart: unless-stopped
+    ports:
+      - "${MAILHOG_SMTP_PORT:-1025}:1025"
+      - "${MAILHOG_UI_PORT:-8025}:8025"
+    profiles:
+      - mail
+
+volumes:
+  pgdata:
+    driver: local

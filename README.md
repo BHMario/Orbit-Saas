@@ -55,12 +55,16 @@ orbit/
 - **npm**: `10+` (`npm --version`)
 - **Docker & Docker Compose**: para servicios locales de desarrollo
 
-## Comandos previstos
+## Comandos
 
 ```bash
 # Entorno de desarrollo
-make dev-up          # Levanta PostgreSQL y servicios con Docker Compose
+make dev-up          # Levanta PostgreSQL con Docker Compose
 make dev-down        # Detiene los servicios
+make dev-logs        # Muestra logs de servicios
+make dev-ps          # Estado de contenedores
+make dev-reset       # Detiene y elimina volúmenes (borra datos)
+make dev-mail        # Levanta servicios + MailHog (correo en desarrollo)
 
 # Backend
 make run-api         # Ejecuta el servidor API
@@ -77,15 +81,18 @@ make migrate-status  # Estado de migraciones
 make sqlc-generate   # Genera código desde consultas SQL
 
 # Frontend
+make fe-install      # Instala dependencias
 make fe-dev          # Servidor de desarrollo frontend
 make fe-build        # Build de producción
 make fe-lint         # Lint de frontend
+make fe-typecheck    # Comprobación de tipos
 make fe-test         # Tests de frontend
+
+# Verificación completa
+make check           # Ejecuta lint + test + typecheck (backend y frontend)
 ```
 
 ## Inicio rápido
-
-> ⚠️ Estas instrucciones estarán completas una vez se configure Docker Compose y las herramientas (commits C03-C04).
 
 ```bash
 # 1. Clonar el repositorio
@@ -94,18 +101,23 @@ git clone <url> && cd orbit
 # 2. Copiar y configurar variables de entorno
 cp .env.example .env
 
-# 3. Levantar servicios
+# 3. Levantar PostgreSQL
 make dev-up
 
-# 4. Aplicar migraciones
+# 4. Instalar dependencias del frontend
+make fe-install
+
+# 5. Aplicar migraciones (disponible a partir de C07)
 make migrate-up
 
-# 5. Ejecutar el backend
+# 6. Ejecutar el backend
 make run-api
 
-# 6. En otra terminal, ejecutar el frontend
+# 7. En otra terminal, ejecutar el frontend
 make fe-dev
 ```
+
+> **Correo en desarrollo:** para capturar correos localmente con MailHog, ejecuta `make dev-mail`. La interfaz web estará disponible en [http://localhost:8025](http://localhost:8025).
 
 ## Documentación
 

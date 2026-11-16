@@ -2,9 +2,11 @@
 # Orbit — Makefile
 # ==============================
 
-.PHONY: help dev-up dev-down run-api run-worker build test lint fmt \
+.PHONY: help dev-up dev-down dev-logs dev-ps dev-reset \
+        run-api run-worker build test lint fmt \
         migrate-up migrate-down migrate-status sqlc-generate \
-        fe-dev fe-build fe-lint fe-test
+        fe-install fe-dev fe-build fe-lint fe-test fe-typecheck \
+        check
 
 help: ## Muestra esta ayuda
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
@@ -12,11 +14,23 @@ help: ## Muestra esta ayuda
 
 # --- Entorno de desarrollo ---
 
-dev-up: ## Levanta servicios de desarrollo (Docker Compose)
+dev-up: ## Levanta servicios de desarrollo (PostgreSQL)
 	docker compose up -d
 
 dev-down: ## Detiene servicios de desarrollo
 	docker compose down
+
+dev-logs: ## Muestra logs de servicios de desarrollo
+	docker compose logs -f
+
+dev-ps: ## Muestra estado de contenedores
+	docker compose ps
+
+dev-reset: ## Detiene servicios y elimina volúmenes (borra datos de DB)
+	docker compose down -v
+
+dev-mail: ## Levanta servicios incluyendo MailHog
+	docker compose --profile mail up -d
 
 # --- Backend ---
 
@@ -55,6 +69,9 @@ sqlc-generate: ## Genera código desde consultas SQL
 
 # --- Frontend ---
 
+fe-install: ## Instala dependencias del frontend
+	cd frontend && npm install
+
 fe-dev: ## Servidor de desarrollo frontend
 	cd frontend && npm run dev
 
@@ -64,5 +81,13 @@ fe-build: ## Build de producción frontend
 fe-lint: ## Lint de frontend
 	cd frontend && npm run lint
 
+fe-typecheck: ## Comprobación de tipos en frontend
+	cd frontend && npm run typecheck
+
 fe-test: ## Tests de frontend
 	cd frontend && npm test
+
+# --- Verificación completa ---
+
+check: lint test fe-typecheck fe-lint fe-test ## Ejecuta todas las verificaciones
+	@echo "\n✅ Todas las verificaciones pasaron."
